@@ -1,0 +1,32 @@
+Lab1
+
+bin/hdfs namenode -format
+sbin/start-dfs.sh
+bin/hdfs dfs -mkdir /user
+bin/hdfs dfs -mkdir /user/adel
+bin/hdfs dfs -copyFromLocal /home/adel/input /user/adel/input
+bin/hdfs dfs -ls /user/adel/input
+
+bin/hadoop com.sun.tools.javac.Main WordCount.java
+jar cf wc.jar WordCount*.class
+bin/hadoop jar wc.jar WordCount /user/adel/input /user/adel/output
+bin/hdfs dfs -get /user/adel/output /home/adel/output
+
+
+sort -n -k2 part-r-00000 | tail -10
+
+=========================================
+Lab2
+
+bin/hdfs namenode -format
+sbin/start-dfs.sh
+bin/hdfs dfs -mkdir /user
+bin/hdfs dfs -mkdir /user/adel
+bin/hdfs dfs -copyFromLocal /home/adel/input /user/adel/input
+bin/hdfs dfs -ls /user/adel/input
+
+bin/hdfs dfs -rm -r /user/adel/output
+bin/hadoop com.sun.tools.javac.Main KMeans.java
+jar cf km.jar KMeans*.class
+bin/hadoop jar km.jar KMeans /user/adel/input /user/adel/output 3 4
+bin/hdfs dfs -get /user/adel/output /home/adel/output
