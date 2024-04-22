@@ -30,3 +30,32 @@ bin/hadoop com.sun.tools.javac.Main KMeans.java
 jar cf km.jar KMeans*.class
 bin/hadoop jar km.jar KMeans /user/adel/input /user/adel/output 3 4
 bin/hdfs dfs -get /user/adel/output /home/adel/output
+
+
+==========================================
+Lab 3
+
+nano $HOME/.bashrc
+source $HOME/.bashrc
+
+in bashrc
+export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/"
+
+export HADOOP_HOME="/home/adel/Downloads/hadoop-2.10.2"
+export PATH=$PATH:$HADOOP_HOME/bin
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/lib/*:.
+
+export SPARK_HOME="/home/adel/Downloads/spark-3.3.4-bin-without-hadoop"
+export SPARK_DIST_CLASSPATH=$(hadoop classpath)
+export PATH=$PATH:$SPARK_HOME/bin
+
+bin/hdfs namenode -format
+sbin/start-dfs.sh
+bin/hdfs dfs -mkdir /user
+bin/hdfs dfs -mkdir /user/adel
+bin/hdfs dfs -copyFromLocal /home/adel/input /user/adel/input
+bin/hdfs dfs -ls /user/adel/input 
+
+java -jar wordcount-1.0.jar hdfs://localhost:9000/user/adel/input hdfs://localhost:9000/user/adel/output
+
+bin/hdfs dfs -get /user/adel/output /home/adel/output
