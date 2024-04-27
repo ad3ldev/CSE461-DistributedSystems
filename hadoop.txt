@@ -59,3 +59,19 @@ bin/hdfs dfs -ls /user/adel/input
 java -jar wordcount-1.0.jar hdfs://localhost:9000/user/adel/input hdfs://localhost:9000/user/adel/output
 
 bin/hdfs dfs -get /user/adel/output /home/adel/output
+
+================================================================
+Lab 4
+
+
+bin/hdfs namenode -format
+sbin/start-dfs.sh
+bin/hdfs dfs -rm -R /user
+bin/hdfs dfs -mkdir /user
+bin/hdfs dfs -mkdir /user/adel
+bin/hdfs dfs -copyFromLocal /home/adel/input /user/adel/input
+bin/hdfs dfs -ls /user/adel/input
+
+java -jar KMeansSpark-1.0.jar hdfs://localhost:9000/user/adel/input hdfs://localhost:9000/user/adel/output 3 4
+
+bin/hdfs dfs -get /user/adel/output /home/adel/output
